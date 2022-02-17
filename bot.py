@@ -23,7 +23,8 @@ def handle_text(message):
     print("Message meta: \n{}".format(message.json))
     if message.text.strip() == "Check":
         (ph, t) = getMeasurements()
-        answer = "{}\npH: {}\nt°: {}℃\n".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), ph, t)
+        answer = "{}\npH: {}\nt°: {}℃\n".format(datetime.datetime.now() \
+            .strftime("%Y-%m-%d %H:%M:%S"), ph, t)
         print("Response: \n{}".format(answer))
         bot.send_message(message.chat.id, answer)
 
