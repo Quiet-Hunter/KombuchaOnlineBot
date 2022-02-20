@@ -1,4 +1,4 @@
-
+import subprocess
 import telebot
 import datetime
 from telebot import types
@@ -9,7 +9,18 @@ bot = telebot.TeleBot(TOKEN)
 print("Started")
 
 def getMeasurements():
-    return 0, 0
+    t = None
+    pH = None
+    output = subprocess.run(['/var/www/homelab/cgi-bin/get_pH.sh'], \
+	stdout=subprocess.PIPE)
+    output = output.stdout.decode("utf-8")
+    output = output.split("\n")
+    for line in output:
+        if line.startswith("t"):
+            t = line[2:]
+        if line.startswith("pH"):
+            pH = line[3:]
+    return pH, t
 
 @bot.message_handler(commands=["start"])
 def start(m, res=False):
